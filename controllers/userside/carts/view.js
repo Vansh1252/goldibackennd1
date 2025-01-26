@@ -8,7 +8,7 @@ const cartviewproduct = async (req, res) => {
     try {
         if (mongoose.Types.ObjectId.isValid(userId)) {
             const cart = await cartmodel.findOne({ userId }).select('-__v -updatedAt -createdAt');
-            if (cart !== null && cart !== undefined) {
+            if (cart !== null) {
                 return responseManger.onsuccess(res, cart, "cart fetched...!");
             } else {
                 return responseManger.badrequest(res, "cart not found...!");

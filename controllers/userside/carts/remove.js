@@ -4,7 +4,7 @@ const constants = require('../../../utilities/constants.js');
 const mongoose = require('mongoose');
 
 const removeFromCart = async (req, res) => {
-    try {
+     try {
         const { productId } = req.body;
         const { userId } = req.user;
 
