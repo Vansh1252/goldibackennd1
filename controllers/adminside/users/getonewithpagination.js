@@ -5,13 +5,13 @@ const constants = require('../../../utilities/constants');
 
 
 const getonewithpagination = async (req, res) => {
-    const { search, status, limit, page } = req.body;
+    const { search, status, product_status, limit, page } = req.body;
     const { adminId } = req.admin;
     try {
         if (mongoose.Types.ObjectId.isValid(adminId)) {
             const itemsPerPage = parseInt(limit) || 10;
             const currentPage = parseInt(page) || 1;
-            let query = {deleted: false};
+            let query = { deleted: false };
             if (search) {
                 query.$or = [
                     { name: { $regex: search, $options: "i" } },
@@ -20,6 +20,9 @@ const getonewithpagination = async (req, res) => {
             }
             if (status) {
                 query.status = status;
+            }
+            if (product_status) {
+                query.product_status = product_status;
             }
             const totalRecords = await usermodel.countDocuments(query);
             const orders = await usermodel

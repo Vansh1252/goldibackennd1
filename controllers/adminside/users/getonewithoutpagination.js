@@ -1,25 +1,25 @@
 const usermodel = require('../../../models/users.model');
 const responseManager = require('../../../utilities/responseManager');
-const mongoose =require('mongoose')
+const mongoose = require('mongoose')
 const constants = require('../../../utilities/constants');
 
 const getone = async (req, res) => {
     try {
         const { adminId } = req.admin;
-        const { search ,status, product_status } = req.body;
+        const { search, status, product_status } = req.body;
         if (mongoose.Types.ObjectId.isValid(adminId)) {
-            const query = {deleted: false};
+            const query = { deleted: false };
             if (search) {
                 query.$or = [
-                    { name: { $regex: search, $options: "i" } }, 
+                    { name: { $regex: search, $options: "i" } },
                     { mobileNumber: { $regex: search, $options: "i" } }
                 ];
             }
             if (status) {
-                query.status = status; 
+                query.status = status;
             }
-            if(product_status){
-                query.product_status =product_status
+            if (product_status) {
+                query.product_status = product_status
             }
             const users = await usermodel.find(query).select("-email -password -deleted -createdBy -createdAt -updatedAt -__v");
             if (!users) {
