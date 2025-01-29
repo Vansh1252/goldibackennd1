@@ -8,8 +8,7 @@ const productsave = async (req, res) => {
     try {
         const { productId, categoryId } = req.body;
         const { adminId } = req.admin;
-        if (mongoose.Types.ObjectId.isValid(adminId)) {
-
+        if (adminId && mongoose.Types.ObjectId.isValid(adminId)) {
             if (productId !== undefined) {
                 if (!mongoose.Types.ObjectId.isValid(productId)) {
                     return responseManager.badrequest(res, "Invalid product ID");
@@ -27,7 +26,6 @@ const productsave = async (req, res) => {
                         return responseManager.badrequest(res, "Invalid category ID");
                     }
                     const category = await categorymodel.findById(categoryId);
-                    console.log(category);
                     if (!category) {
                         return responseManager.badrequest(res, "Category not found");
                     }
