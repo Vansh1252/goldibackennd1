@@ -11,7 +11,7 @@ const listOfOrder = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return responseManager.badrequest(res, "Invalid User ID!");
         }
-        const orders = await ordermodel.find({ userId }).select('finalDescription status totalBags totalQuantity').lean();
+        const orders = await ordermodel.find({ userId }).select('finalDescription status totalBag totalQuantity').lean();
 
         if (!orders || orders.length === 0) {
             return responseManager.badrequest(res, "No orders found for this user!");
