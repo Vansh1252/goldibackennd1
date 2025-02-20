@@ -49,6 +49,9 @@ const createBag = async (req, res) => {
             if (product.bagquantity > orderProduct.remainingQuantity) {
                 return responseManager.badrequest(res, "Invalid bag quantity for product!");
             }
+            if (orderProduct.remainingQuantity != product.remainingQuantity) {
+                return responseManager.badrequest(res, "remaining quanitity is not correct...!");
+            }
             orderProduct.remainingQuantity -= product.bagquantity;
             return {
                 productId: product.productId,
@@ -69,7 +72,7 @@ const createBag = async (req, res) => {
             }
             existingBag.bagName = bagName;
             existingBag.deliveryDate = new Date(deliveryDate);
-            existingBag.products = updatedProducts;
+            existingBag.products = enrichedProducts;
             await existingBag.save();
             await order.save();
             return responseManager.onsuccess(res, existingBag, "Bag updated successfully...!");
@@ -90,7 +93,7 @@ const createBag = async (req, res) => {
             return responseManager.onsuccess(res, newBag, "Bag created successfully...!");
         }
     } catch (error) {
-        return responseManager.servererror(res, constants.RESPONSE_MESSAGES.SERVER_ERROR);
+        return responseManager.servererror(res, "Something went wrong!");
     }
 };
 
