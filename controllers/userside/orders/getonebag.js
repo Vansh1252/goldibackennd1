@@ -14,7 +14,7 @@ const getonebybag = async (req, res) => {
             return responseManager.badrequest(res, "Invalid Bag ID!");
         }
         const bag = await bagmodel.findById(bagId)
-            .populate('orders', ' totalquantity');
+            .populate('orderId', ' totalquantity');
         if (!bag) {
             return responseManager.badrequest(res, "Bag not found!");
         }
@@ -38,6 +38,7 @@ const getonebybag = async (req, res) => {
 
         return responseManager.onsuccess(res, response, "Bag details fetched successfully!");
     } catch (error) {
+        console.log(error);
         return responseManager.servererror(res, constants.RESPONSE_MESSAGES.SERVER_ERROR);
     }
 };
