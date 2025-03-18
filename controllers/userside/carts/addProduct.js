@@ -93,7 +93,6 @@ const addToCart = async (req, res) => {
             return responseManager.Authorization(res, "userId is Invalid...!")
         }
     } catch (error) {
-        console.log(error);
         return responseManager.servererror(res, constants.RESPONSE_MESSAGES.SERVER_ERROR);
     }
 };
