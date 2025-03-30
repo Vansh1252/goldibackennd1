@@ -93,7 +93,7 @@ const createBag = async (req, res) => {
             return responseManager.onsuccess(res, newBag, "Bag created successfully...!");
         }
     } catch (error) {
-        return responseManager.servererror(res, "Something went wrong!");
+        return responseManager.servererror(res,constants.RESPONSE_MESSAGES.SERVER_ERROR);
     }
 };
 
